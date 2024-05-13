@@ -12,33 +12,45 @@ import {zodResolver} from "@hookform/resolvers/zod"
 import { AuthCredentialsValidator, TAuthCredentialsValidator } from "@/lib/validators/account-credentials"
 import { trpc } from "@/trpc/client"
 import { toast } from "sonner"
-import { ZodError } from "zod"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 
 const Page = () => {
+    const searchParams = useSearchParams()
+    const isSeller = searchParams.get("as") === "seller"
+    const origin = searchParams.get("origin")
+
+    const contAsSeller = () => {
+        router.push("?as=seller")
+    }
+    const contAsBuyer = () => {
+        router.replace("/sign-in", undefined)
+    }
+
     const { register, handleSubmit, formState: {errors} } = useForm<TAuthCredentialsValidator>({
         resolver: zodResolver(AuthCredentialsValidator),
     })
     const router = useRouter()
-    const {mutate, isLoading} = trpc.auth.createPayloadUser.useMutation({
-        onError: (err) => {
-            if(err.data?.code === "CONFLICT"){
-                toast.error("This email is already in use. Sign in instead?")
-            }
-            if(err instanceof ZodError){
-                toast.error(err.issues[0].message)
-                return
-            }
-            toast.error('Something went wrong. Please try again')
-        },
+    const {mutate: signIn, isLoading} = trpc.auth.signIn.useMutation({
         onSuccess: () => {
-            toast.success(`Success`)
-            router.push('/verify-email')
+            toast.success(`Signed in successfully`)
+            router.refresh()
+            if(origin){
+                router.push(`/${origin}`)
+            }
+            if(isSeller) {
+                router.push('/sell')
+            }
+            router.push('/')
+        },
+        onError:(err) => {
+            if(err.data?.code === "UNAUTHORIZED") {
+                toast.error("Invalid email or password")
+            }
         }
     })
 
     const onSubmit = ({email, password}: TAuthCredentialsValidator) => {
-        mutate({email, password})
+        signIn({email, password})
     }
     return <>
         <div className="container relative flex pt-20 flex-col items-center justify-center lg:px-0">
@@ -46,13 +58,13 @@ const Page = () => {
                 <div className="flex flex-col items-center space-y-2 text-center">
                     <Icons.logo className="h-20 w-20"/>
                     <h1 className="text-2xl font-bold">
-                        Create an account
+                        Sign in to your {isSeller? "seller" : ""} account
                     </h1>
                     <Link className={buttonVariants({
                         variant: 'link',
                         className: 'gap-1.5'
-                    })} href='/sign-in'>
-                        Already have an account? Sign-in
+                    })} href='/sign-up'>
+                        Don&apos;t have an account?
                         <ArrowRight className="h-4 w-4"/>
                     </Link>
                 </div>
@@ -80,9 +92,23 @@ const Page = () => {
                                 placeholder="password"></Input>
                             </div>
 
-                            <Button>Sign up</Button>
+                            <Button>Sign in</Button>
                         </div>
                     </form>
+
+                    <div className="relative">
+                        <div aria-hidden='true' className="absolute inset-0 flex items-center">
+                            <span className="w-full border-t"></span>
+                        </div>
+                        <div className="relative flex justify-center text-xs uppercase">
+                            <span className="bg-background px-2 text-muted-foreground">or</span>
+                        </div>
+                    </div>
+                    {isSeller ? (
+                        <Button onClick={contAsBuyer} variant={'secondary'} disabled={isLoading}>Continue as customer</Button>
+                    ): (
+                        <Button onClick={contAsSeller} variant={'secondary'} disabled={isLoading}>Contiue as seller</Button>
+                    )}
                 </div>
             </div>
         </div>

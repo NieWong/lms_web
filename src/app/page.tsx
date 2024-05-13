@@ -7,12 +7,12 @@ const perks = [
   {
     name: "Instant Delivery",
     icon: ArrowDownToLine,
-    description: "Get your assets delivered to your email in second"
+    description: "Get your education delivered to your email in second"
   },
   {
     name: "Guaranteed Quality",
     icon: CheckCircle,
-    description: "Every asset on our platform is verified"
+    description: "Every product on our platform is verified"
   },
   {
     name: "For the planet",

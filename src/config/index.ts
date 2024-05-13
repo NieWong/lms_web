@@ -10,44 +10,44 @@ export const config = {
 
 export const PRODUCT_CATEGORIES = [
     {
-        label: "UI kits",
+        label: "Popular choises",
         value: "ui_kits" as const,
         featured: [
             {
                 name: "Editor picks",
                 href: "#",
-                imageSrc: '/nav/ui-kits/mixed.jpg'
+                imageSrc: '/nav/ui-kits/csharp.png'
             },
             {
                 name: "New Arrivals",
                 href: "#",
-                imageSrc: '/nav/ui-kits/blue.jpg'
+                imageSrc: '/nav/ui-kits/js.png'
             },
             {
                 name: "Best Sellers",
                 href: "#",
-                imageSrc: '/nav/ui-kits/purple.jpg'
+                imageSrc: '/nav/ui-kits/python.png'
             },
         ]
     },
     {
-        label: "Icons",
-        value: "icons" as const,
+        label: "Category",
+        value: "category" as const,
         featured: [
             {
                 name: "Favorite",
                 href: "#",
-                imageSrc: '/nav/icons/picks.jpg'
+                imageSrc: ''
             },
             {
                 name: "New Arrivals",
                 href: "#",
-                imageSrc: '/nav/icons/new.jpg'
+                imageSrc: ''
             },
             {
                 name: "BestSelling Icons",
                 href: "#",
-                imageSrc: '/nav/icons/bestsellers.jpg'
+                imageSrc: ''
             },
         ]
     }
