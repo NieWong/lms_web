@@ -4,7 +4,7 @@ import { Button } from "../ui/button"
 import { ChevronDown } from "lucide-react"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
-import Image from "next/image"
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator } from "../ui/command"
 
 type Category = typeof PRODUCT_CATEGORIES[number]
 
@@ -31,26 +31,36 @@ const NavItem = ({isAnyOpen, category, handleOpen, isOpen}: NavItemProps) => {
             })}>
                 <div className="absolute inset-0 top-1/2 bg-white shodow" aria-hidden='true'/>
                 <div className="relative bg-white">
-                    <div className="mx-auto max-w-7xl px-8">
+                    {/* <div className="mx-auto max-w-7xl px-8">
                         <div className="grid grid-cols-4 gap-x-8 gap-y-10 py-16">
                             <div className="col-span-4 col-start-1 grid grid-cols-3 gap-x-8">
                                 {category.featured.map((item) => (
                                     <div key={item.name} className="group relative text-base sm:text-sm">
-                                        <div className="relative aspect-video overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75">
-                                            <Image 
-                                                src={item.imageSrc}
-                                                alt='product category image'
-                                                fill
-                                                className='object-cover object-center'/>
-                                        </div>
                                         <Link href={item.href} className="mt-6 block font-medium text-gray-900">
                                             {item.name}
                                         </Link>
-                                        <p className="mt-1" aria-hidden='true'>Shop now</p>
                                     </div>
                                 ))}
                             </div>
                         </div>
+                    </div> */} 
+                    <div className="mx-auto max-w-3xl px-8">
+                    <Command>
+                        <CommandInput placeholder="Type a command or search..." />
+                        <CommandList>
+                            <CommandEmpty>No results found.</CommandEmpty>
+                            <CommandGroup heading="Suggestions">
+                                {category.featured.map((item) => (
+                                    <CommandItem key={item.name}>
+                                        <Link href={item.href} className="">
+                                            {item.name}
+                                        </Link>
+                                    </CommandItem>
+                                ))}
+                            </CommandGroup>
+                            <CommandSeparator />
+                        </CommandList>
+                    </Command>
                     </div>
                 </div>
             </div>

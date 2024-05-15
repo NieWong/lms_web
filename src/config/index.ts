@@ -1,53 +1,38 @@
-import { constants } from "buffer"
-
-export const config = {
-    ...constants,
-    NODE_ENV: process.env.NODE_ENV || process.env.NODE_ENV,
-    WEB_URL: process.env.NEXT_PUBLIC_DOMAIN || 'http://localhost:3013',
-    BACKEND_URL: process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:4013',
-    BACKEND_WS_URL: process.env.NEXT_PUBLIC_BACKEND_WS_URL || 'ws://localhost:4013',
-}
 
 export const PRODUCT_CATEGORIES = [
     {
-        label: "Popular choises",
-        value: "ui_kits" as const,
+        label: "Business",
+        value: "business" as const,
         featured: [
             {
-                name: "Editor picks",
+                name: "Brocker",
                 href: "#",
-                imageSrc: '/nav/ui-kits/csharp.png'
             },
             {
-                name: "New Arrivals",
+                name: "Business",
                 href: "#",
-                imageSrc: '/nav/ui-kits/js.png'
             },
             {
-                name: "Best Sellers",
+                name: "Finance & Accounting",
                 href: "#",
-                imageSrc: '/nav/ui-kits/python.png'
             },
         ]
     },
     {
-        label: "Category",
-        value: "category" as const,
+        label: "Development",
+        value: "business" as const,
         featured: [
             {
-                name: "Favorite",
+                name: "C+",
                 href: "#",
-                imageSrc: ''
             },
             {
-                name: "New Arrivals",
+                name: "NodeJs",
                 href: "#",
-                imageSrc: ''
             },
             {
-                name: "BestSelling Icons",
+                name: "Python",
                 href: "#",
-                imageSrc: ''
             },
         ]
     }
